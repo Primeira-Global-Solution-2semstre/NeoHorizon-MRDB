@@ -5,8 +5,7 @@ Sistema inteligente para monitoramento de detritos espaciais.
 ## Integrantes
 
 - Rafael Kubagawa Ramos
-- Nome 2
-- Nome 3
+-
 
 ## Objetivo
 
