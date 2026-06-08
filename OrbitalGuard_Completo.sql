@@ -1,12 +1,12 @@
 -- =====================================================
--- ORBITALGUARD - GLOBAL SOLUTION 2026/1
--- ORACLE PL/SQL COMPLETE ACADEMIC SCRIPT (CORRIGIDO)
+-- NEOHORIZON - GLOBAL SOLUTION 2026/1
+-- ORACLE PL/SQL COMPLETE ACADEMIC SCRIPT
 -- =====================================================
 
 -- =====================================================
 -- 1. APAGAR ESTRUTURAS (OPCIONAL - PARA REEXECUÇÃO)
 -- =====================================================
-DROP PACKAGE PKG_ORBITAL_GUARD;
+DROP PACKAGE PKG_NEOHORIZON;
 DROP TRIGGER TRG_LOG_CONSULTA;
 DROP TRIGGER TRG_ALERTA_COLISAO;
 DROP TRIGGER TRG_STATUS_DETRITO;
@@ -116,12 +116,12 @@ CREATE SEQUENCE SEQ_COLISOES START WITH 1;
 SET SERVEROUTPUT ON;
 BEGIN
  FOR I IN 1..10 LOOP
-   INSERT INTO CLIENTES VALUES(SEQ_CLIENTES.NEXTVAL, 'EMPRESA '||I, 'EMAIL'||I||'@ORBITAL.COM', 'KEY_XYZ_'||I,
+   INSERT INTO CLIENTES VALUES(SEQ_CLIENTES.NEXTVAL, 'EMPRESA '||I, 'EMAIL'||I||'@NEOHORIZON.COM', 'KEY_NEO_'||I,
    CASE WHEN MOD(I,3)=0 THEN 'PREMIUM' WHEN MOD(I,2)=0 THEN 'PRO' ELSE 'FREE' END);
  END LOOP;
 
  FOR I IN 1..30 LOOP
-   INSERT INTO DETRITOS VALUES(SEQ_DETRITOS.NEXTVAL, 10000+I, 'DETRITO espacial '||I, I * 1.5, I * 5, 'ATIVO');
+   INSERT INTO DETRITOS VALUES(SEQ_DETRITOS.NEXTVAL, 10000+I, 'DETRITO '||I, I * 1.5, I * 5, 'ATIVO');
  END LOOP;
 
  FOR I IN 1..10 LOOP
@@ -137,10 +137,9 @@ BEGIN
  END LOOP;
 
  FOR I IN 1..10 LOOP
-   INSERT INTO SATELITES VALUES(SEQ_SATELITES.NEXTVAL, 'STARLINK-'||I, 'SPACEX', 'ATIVO');
+   INSERT INTO SATELITES VALUES(SEQ_SATELITES.NEXTVAL, 'SATELITE-'||I, 'NEO-CONSTELLATION', 'ATIVO');
  END LOOP;
 
- -- Carga adicionada para evitar relatórios vazios
  FOR I IN 1..10 LOOP
    INSERT INTO COLISOES_PREVISTAS VALUES(SEQ_COLISOES.NEXTVAL, I, I, 15.0 + (I*7), SYSDATE + I);
  END LOOP;
@@ -215,7 +214,7 @@ CREATE OR REPLACE TRIGGER TRG_LOG_CONSULTA
 AFTER INSERT ON CONSULTAS_API
 FOR EACH ROW
 BEGIN
- DBMS_OUTPUT.PUT_LINE('LOG: API Endpoint ' || :NEW.ENDPOINT || ' acessado.');
+ DBMS_OUTPUT.PUT_LINE('LOG NeoHorizon: Endpoint ' || :NEW.ENDPOINT || ' acessado.');
 END;
 /
 
@@ -240,13 +239,13 @@ END;
 -- =====================================================
 -- 8. PACOTES (PACKAGES)
 -- =====================================================
-CREATE OR REPLACE PACKAGE PKG_ORBITAL_GUARD AS
+CREATE OR REPLACE PACKAGE PKG_NEOHORIZON AS
  FUNCTION TOTAL_ALERTAS RETURN NUMBER;
  PROCEDURE GERAR_ALERTA(P_DETRITO NUMBER, P_RISCO NUMBER);
 END;
 /
 
-CREATE OR REPLACE PACKAGE BODY PKG_ORBITAL_GUARD AS
+CREATE OR REPLACE PACKAGE BODY PKG_NEOHORIZON AS
  FUNCTION TOTAL_ALERTAS RETURN NUMBER IS
  BEGIN
   RETURN FN_TOTAL_ALERTAS;
@@ -259,10 +258,8 @@ END;
 /
 
 -- =====================================================
--- 9. CURSORES EXPLÍCITOS (VALIDADOS E FUNCIONAIS)
+-- 9. CURSORES EXPLÍCITOS
 -- =====================================================
-
--- Cursor 1: Seleção de detritos grandes
 DECLARE
  CURSOR C1 IS SELECT ID_DETRITO, NOME, TAMANHO FROM DETRITOS WHERE TAMANHO > 10;
  R_DET C1%ROWTYPE;
@@ -277,7 +274,6 @@ BEGIN
 END;
 /
 
--- Cursor 2: Seleção de Clientes Premium
 DECLARE
  CURSOR C2 IS SELECT EMPRESA, EMAIL FROM CLIENTES WHERE PLANO = 'PREMIUM';
  R_CLI C2%ROWTYPE;
@@ -292,7 +288,6 @@ BEGIN
 END;
 /
 
--- Cursor 3: Monitoramento de Alertas Ativos
 DECLARE
  CURSOR C3 IS SELECT ID_ALERTA, RISCO FROM ALERTAS WHERE STATUS = 'ATIVO';
  R_ALE C3%ROWTYPE;
@@ -307,7 +302,6 @@ BEGIN
 END;
 /
 
--- Cursor 4: Satélites Cadastrados
 DECLARE
  CURSOR C4 IS SELECT NOME, OPERADORA FROM SATELITES;
  R_SAT C4%ROWTYPE;
@@ -323,10 +317,10 @@ END;
 /
 
 -- =====================================================
--- 10. BLOCOS ANÔNIMOS (REQUISITOS E EXCEÇÕES TRATADAS)
+-- 10. BLOCOS ANÔNIMOS
 -- =====================================================
 
--- Bloco 1: SELECT INTO, Variável e Exceção de Contagem
+-- Bloco 1
 DECLARE 
  V_QTD NUMBER;
 BEGIN
@@ -343,19 +337,19 @@ EXCEPTION
 END;
 /
 
--- Bloco 2: Manipulação de dados e Exceção de Chave Inexistente
+-- Bloco 2
 DECLARE 
  V_STATUS VARCHAR2(20);
 BEGIN
- SELECT STATUS INTO V_STATUS FROM DETRITOS WHERE ID_DETRITO = 999; -- ID Inexistente para forçar erro
+ SELECT STATUS INTO V_STATUS FROM DETRITOS WHERE ID_DETRITO = 999;
  DBMS_OUTPUT.PUT_LINE('Bloco 2 - Status: ' || V_STATUS);
 EXCEPTION 
  WHEN NO_DATA_FOUND THEN 
-    DBMS_OUTPUT.PUT_LINE('Bloco 2 - Sucesso no Tratamento: Detrito 999 não existe no banco.');
+    DBMS_OUTPUT.PUT_LINE('Bloco 2 - Sucesso no Tratamento: Detrito 999 não existe.');
 END;
 /
 
--- Bloco 3: Estrutura Condicional Complexa (IF/ELSIF/ELSE)
+-- Bloco 3
 DECLARE 
  V_RISCO NUMBER := 85;
  V_GRAVIDADE VARCHAR2(30);
@@ -369,17 +363,16 @@ BEGIN
  END IF;
  DBMS_OUTPUT.PUT_LINE('Bloco 3 - Nível de Risco Simulado: ' || V_GRAVIDADE);
  
- -- Forçando exceção de divisão por zero acadêmica
  IF V_RISCO > 0 THEN
     V_RISCO := V_RISCO / 0;
  END IF;
 EXCEPTION 
  WHEN ZERO_DIVIDE THEN 
-    DBMS_OUTPUT.PUT_LINE('Bloco 3 - Exceção Tratada: Tentativa de divisão por zero no cálculo.');
+    DBMS_OUTPUT.PUT_LINE('Bloco 3 - Exceção Tratada: Divisão por zero monitorada.');
 END;
 /
 
--- Bloco 4: Estrutura de Repetição - WHILE LOOP
+-- Bloco 4
 DECLARE 
  V_CONTADOR NUMBER := 1;
  V_NOME_DET VARCHAR2(100);
@@ -391,28 +384,27 @@ BEGIN
  END LOOP;
 EXCEPTION 
  WHEN TOO_MANY_ROWS THEN 
-    DBMS_OUTPUT.PUT_LINE('Bloco 4 - Erro: Retornou mais de uma linha.');
+    DBMS_OUTPUT.PUT_LINE('Bloco 4 - Erro: Múltiplas linhas.');
  WHEN OTHERS THEN
     DBMS_OUTPUT.PUT_LINE('Bloco 4 - Outro erro capturado.');
 END;
 /
 
--- Bloco 5: Estrutura de Repetição - FOR LOOP (Variável para Tabela)
+-- Bloco 5
 DECLARE
- V_MENSAGEM VARCHAR2(50) := 'Teste de Carga de API';
+ V_MENSAGEM VARCHAR2(50) := 'NeoHorizon API Test Log';
 BEGIN
  FOR I IN 1..5 LOOP
-   -- Utiliza a procedure interna para persistir dados usando variáveis
-   PRC_REGISTRAR_CONSULTA(1, V_MENSAGEM || ' bloco ' || I);
+   PRC_REGISTRAR_CONSULTA(1, V_MENSAGEM || ' - Bloco ' || I);
  END LOOP;
- DBMS_OUTPUT.PUT_LINE('Bloco 5 (FOR) - Consultas de teste inseridas com sucesso.');
+ DBMS_OUTPUT.PUT_LINE('Bloco 5 (FOR) - Consultas injetadas via lote com variáveis.');
 EXCEPTION 
  WHEN OTHERS THEN 
-    DBMS_OUTPUT.PUT_LINE('Bloco 5 - Falha na inserção em lote.');
+    DBMS_OUTPUT.PUT_LINE('Bloco 5 - Falha na inserção.');
 END;
 /
 
--- Bloco 6: Estrutura de Repetição - LOOP ... EXIT WHEN
+-- Bloco 6
 DECLARE 
  V_IDX NUMBER := 1;
  V_EMP VARCHAR2(100);
@@ -425,35 +417,29 @@ BEGIN
  END LOOP;
 EXCEPTION 
  WHEN NO_DATA_FOUND THEN 
-    DBMS_OUTPUT.PUT_LINE('Bloco 6 - Erro: ID do cliente procurado não existe.');
+    DBMS_OUTPUT.PUT_LINE('Bloco 6 - ID não localizado.');
 END;
 /
 
 -- =====================================================
--- 11. RELATÓRIOS SQL (5 QUERIES COM JOIN OBRIGATÓRIAS)
+-- 11. RELATÓRIOS SQL
 -- =====================================================
-
--- Relatório 1: Clientes e seus acessos à API
 SELECT C.EMPRESA, CA.ENDPOINT, CA.DATA_CONSULTA
 FROM CLIENTES C 
 INNER JOIN CONSULTAS_API CA ON C.ID_CLIENTE = CA.ID_CLIENTE;
 
--- Relatório 2: Detritos e dados de suas órbitas atuais
 SELECT D.NOME AS DETRITO, O.ALTITUDE, O.VELOCIDADE
 FROM DETRITOS D 
 INNER JOIN ORBITAS O ON D.ID_DETRITO = O.ID_DETRITO;
 
--- Relatório 3: Detritos espaciais com alertas de criticidade gerados
 SELECT D.NOME AS DETRITO, A.RISCO, A.STATUS AS STATUS_ALERTA
 FROM DETRITOS D 
 INNER JOIN ALERTAS A ON D.ID_DETRITO = A.ID_DETRITO;
 
--- Relatório 4: Satélites e as probabilidades de colisões iminentes
 SELECT S.NOME AS SATELITE, S.OPERADORA, C.PROBABILIDADE, C.DATA_PREVISTA
 FROM SATELITES S 
 INNER JOIN COLISOES_PREVISTAS C ON S.ID_SATELITE = C.ID_SATELITE;
 
--- Relatório 5: Visão Consolidada de Risco (Múltiplos Joins: Detritos x Colisão x Satélite)
 SELECT D.NOME AS OBJETO_DETRITO, S.NOME AS SATELITE_ALVO, C.PROBABILIDADE || '%' AS CHANCE_COLISAO
 FROM DETRITOS D
 INNER JOIN COLISOES_PREVISTAS C ON D.ID_DETRITO = C.ID_DETRITO
