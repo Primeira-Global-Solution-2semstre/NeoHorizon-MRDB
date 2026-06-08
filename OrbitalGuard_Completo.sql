@@ -3,9 +3,13 @@
 -- ORACLE PL/SQL COMPLETE ACADEMIC SCRIPT
 -- =====================================================
 
+set verify off;
+set serveroutput on;
+
 -- =====================================================
 -- 1. APAGAR ESTRUTURAS (OPCIONAL - PARA REEXECUÇÃO)
 -- =====================================================
+
 DROP PACKAGE PKG_NEOHORIZON;
 DROP TRIGGER TRG_LOG_CONSULTA;
 DROP TRIGGER TRG_ALERTA_COLISAO;
