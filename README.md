@@ -1,4 +1,4 @@
-# 🌌 NeoHorizon – Sistema Inteligente para Monitoramento de Detritos Espaciais
+# NeoHorizon – Sistema Inteligente para Monitoramento de Detritos Espaciais
 
 ## Global Solution 2026/1
 
@@ -6,7 +6,7 @@
 
 ---
 
-## 👨‍💻 Integrantes
+## Integrantes
 
 | Nome                   | RM       |
 | ---------------------- | -------- |
@@ -15,7 +15,7 @@
 
 ---
 
-# 🚀 Sobre o Projeto
+# Sobre o Projeto
 
 O **NeoHorizon** é um sistema desenvolvido em Oracle PL/SQL com o objetivo de monitorar detritos espaciais, identificar potenciais riscos de colisão e auxiliar na proteção de satélites ativos em órbita terrestre.
 
@@ -25,7 +25,7 @@ O projeto foi desenvolvido como parte da disciplina **Mastering Relational and N
 
 ---
 
-# 🎯 Objetivo
+# Objetivo
 
 O NeoHorizon tem como finalidade:
 
@@ -38,7 +38,7 @@ O NeoHorizon tem como finalidade:
 
 ---
 
-# 🏗️ Arquitetura do Sistema
+# Arquitetura do Sistema
 
 O sistema é composto por uma estrutura relacional totalmente normalizada e integrada.
 
@@ -68,7 +68,7 @@ As tabelas são relacionadas através de chaves primárias e estrangeiras, garan
 
 ---
 
-# 📋 Requisitos Acadêmicos Atendidos
+# Requisitos Acadêmicos Atendidos
 
 | Requisito                      | Status |
 | ------------------------------ | ------ |
@@ -85,7 +85,7 @@ As tabelas são relacionadas através de chaves primárias e estrangeiras, garan
 
 ---
 
-# 🗄️ Estrutura do Banco de Dados
+# Estrutura do Banco de Dados
 
 ## Tabelas Principais
 
@@ -123,9 +123,9 @@ Histórico de eventos e operações executadas.
 
 ---
 
-# ⚙️ Recursos Implementados
+# Recursos Implementados
 
-## 🔹 Functions
+## Functions
 
 As funções foram desenvolvidas para:
 
@@ -135,7 +135,7 @@ As funções foram desenvolvidas para:
 
 ---
 
-## 🔹 Procedures
+## Procedures
 
 As procedures executam:
 
@@ -145,7 +145,7 @@ As procedures executam:
 
 ---
 
-## 🔹 Triggers
+## Triggers
 
 ### TRG_ALERTA_AUTOMATICO
 
@@ -161,7 +161,7 @@ Registra eventos importantes para auditoria.
 
 ---
 
-## 🔹 Package PKG_NEOHORIZON
+## Package PKG_NEOHORIZON
 
 O package centraliza as regras de negócio do sistema.
 
@@ -175,7 +175,7 @@ Principais responsabilidades:
 
 ---
 
-# 🔄 Cursores Explícitos
+# Cursores Explícitos
 
 O sistema utiliza 4 cursores explícitos para:
 
@@ -186,7 +186,7 @@ O sistema utiliza 4 cursores explícitos para:
 
 ---
 
-# 📊 Relatórios Analíticos
+# Relatórios Analíticos
 
 Foram desenvolvidos 5 relatórios utilizando INNER JOIN, GROUP BY e funções de agregação.
 
@@ -200,7 +200,7 @@ Exemplos:
 
 ---
 
-# 🧪 Dados Simulados
+# Dados Simulados
 
 O banco é populado automaticamente com mais de 90 registros fictícios para simular um ambiente real de monitoramento espacial.
 
@@ -215,7 +215,7 @@ Os dados incluem:
 
 ---
 
-# 🚀 Como Executar o Projeto
+# Como Executar o Projeto
 
 ## 1. Abrir o Oracle SQL Developer
 
@@ -252,7 +252,7 @@ ORDER BY OBJECT_TYPE, OBJECT_NAME;
 
 ---
 
-# 📈 Exemplo de Saída
+# Exemplo de Saída
 
 ```text
 ALERTA CRÍTICO GERADO
@@ -267,7 +267,7 @@ AÇÃO IMEDIATA RECOMENDADA
 
 ---
 
-# 🛡️ Benefícios da Solução
+# Benefícios da Solução
 
 * Automação de processos de monitoramento.
 * Redução de riscos operacionais.
@@ -278,7 +278,7 @@ AÇÃO IMEDIATA RECOMENDADA
 
 ---
 
-# 💻 Tecnologias Utilizadas
+# Tecnologias Utilizadas
 
 * Oracle Database
 * Oracle SQL Developer
@@ -289,7 +289,7 @@ AÇÃO IMEDIATA RECOMENDADA
 
 ---
 
-# 📚 Conceitos Aplicados
+# Conceitos Aplicados
 
 * Modelagem Relacional
 * Normalização de Dados
@@ -307,7 +307,7 @@ AÇÃO IMEDIATA RECOMENDADA
 
 ---
 
-# 🌍 Contexto da Global Solution
+# Contexto da Global Solution
 
 O aumento constante da quantidade de satélites e detritos espaciais representa um desafio global para a segurança das operações orbitais.
 
@@ -315,7 +315,7 @@ O NeoHorizon foi concebido como uma plataforma de demonstração capaz de aplica
 
 ---
 
-# ✅ Conclusão
+# Conclusão
 
 O NeoHorizon demonstra a aplicação prática dos recursos avançados do Oracle PL/SQL na construção de uma solução robusta para monitoramento espacial.
 
